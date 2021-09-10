@@ -9,13 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BETH-zhang/net-speed-test.git"
+    "url": "git+https://github.com/BETH-zhang/net-speed-test.git"
   },
   "keywords": [
     "speed test",
     "network speed"
   ],
-  "index": "./build/netSpeedTest.js",
   "author": "beth",
   "license": "MIT",
   "devDependencies": {},
@@ -23,5 +22,10 @@
     "webpack": "^5.52.0",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.1.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/BETH-zhang/net-speed-test/issues"
+  },
+  "homepage": "https://github.com/BETH-zhang/net-speed-test#readme",
+  "main": "./build/netSpeedTest.js"
 }
