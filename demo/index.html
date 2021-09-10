@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>demo</title>
+</head>
+
+<body>
+
+  <script>
+
+    function loadScript(url, callback) {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      if (typeof (callback) != "undefined" && typeof callback === 'function') {
+        if (script.readyState) {
+          script.onreadystatechange = function () {
+            if (script.readyState == "loaded" || script.readyState == "complete") {
+              script.onreadystatechange = null;
+              callback();
+            }
+          };
+        } else {
+          script.onload = function () {
+            callback();
+          };
+        }
+      }
+      script.src = url;
+      var loadJs = document.getElementById('loadJs') || document.body;
+      loadJs.appendChild(script);
+    }
+
+    function loadScripts(urls, callback) {
+      var data = Array(urls.length).fill(0)
+      urls.forEach((url, index) => {
+        loadScript(url, () => {
+          data[index] = 1
+        })
+      })
+
+      var timer = setInterval(() => {
+        if (data.indexOf(0) === -1) {
+          clearInterval(timer)
+          if (callback) callback()
+        }
+      }, 100)
+    }
+    loadScripts([
+      "../build/netSpeedTest.js?t=" + new Date().getTime(),
+    ], () => {
+      init()
+    })
+
+    function init() {
+      const speedTest = new netSpeedTest({
+        speedInterval: 1000,
+      })
+      speedTest.onChange = (res) => {
+        console.log('res: ', res)
+      }
+      // '/assets/127kb.png', 127
+      // speedTest.testWithImage()
+      speedTest.testWithAjax()
+      // speedTest.testWithDownlink()
+      // speedTest.netSpeed()
+      // speedTest.startMonitor()
+
+      document.addEventListener('change-net-speed', function(e) {
+        console.log('change-net-speed: ', e.detail)
+      })
+    }
+  </script>
+</body>
+
+</html>
